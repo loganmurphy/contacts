@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+}
+
+.select {
+  line-height: 84px!important;
+  font-size: 1.5rem!important;
+  height: 88px!important;
+}
+
+.name {
+  font-size: 1.5rem!important;
+  padding-bottom: 2px!important;
+}
+
+li {
+  padding: 1rem;
+}
