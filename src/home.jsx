@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-// import AddContact from './contacts'
+import database, {User} from './fsociety';
+
 
 class Home extends Component {
   constructor(props){
     super(props);
+
     var key = props.match.id || null;
 
     var contacts = JSON.parse(localStorage.contacts) || [];
@@ -32,62 +34,107 @@ class Home extends Component {
       show_all: false,
     }
   }
-
 // This toggles visible fields
 
   toggle_all(){
     this.setState({show_all: !this.state.show_all})
   }
 
+
+  // get_contacts(){
+  //   database.ref('contacts/' + User.user.uid)
+  //     .once('value').then(function(contacts) {
+  //       console.log('here are your contacts from the db', contacts.val());
+  //       this.props.setState({contacts: contacts.val()});
+  //     });
+  // }
+
   sort(){
-    var contact_array;
+    // this.get_contacts();
+
+    var contact_array = []
     var contacts;
+    var sorted_contacts = []
+    var the_map;
 
-    if (localStorage.contacts){
-      console.log('I have contacts in my local storage, WHOOO!')
-      contact_array = JSON.parse(localStorage.contacts);
-      console.log('local contacts', contact_array)
-    } else {
-      console.log('I have no contacts in my local storage, BOOOHOOOHOOO!')
-    }
+    // console.log('props here', this.props)
+    var p = new Promise((resolve, reject)=>{
+    database.ref('contacts/' + User.user.uid)
+      .once('value').then((contacts)=> {
+        contact_array.push(contacts.val());
+          sorted_contacts = contact_array.sort(function(c1, c2){
+          if(c1.name > c2.name){
+            return 1;
+          } else {
+            return -1;
+          }
+        })
+        console.log('here are your contacts from the db', typeof sorted_contacts[0]);
+        resolve (sorted_contacts);
+      })
+    })
 
-    var sorted_contacts = contact_array.sort(function(c1, c2){
-      if(c1.name > c2.name){
-        return 1;
-      } else {
-        return -1;
-      }
+    p.then((val)=>{
+      console.log('val', val);
+      contacts = val[0].map((contact)=> {
+        console.log('con', contact.key)
+        if (this.state.show_all){
+         return (
+           <li key={contact.key} onClick={()=> this.toggle_all()}>
+             {contact.name} {contact.city} {contact.state}</li>
+         );
+       } else {
+         return (
+
+           <li key={contact.key} onClick={()=> this.toggle_all()}>
+             {/* <button onClick={()=> this.remove_contact(i)}>X</button> */}
+             <a href={'/remove/' + contact.key}>X</a>
+
+             {/* <button onClick={()=> this.edit_contact(i)}>edit</button> */}
+             <a href={'/edit/' + contact.key}>edit</a>
+             {contact.prefix} {contact.name} {contact.email} {contact.phone} {contact.address} {contact.city} {contact.state} {contact.zip}</li>
+         );
+       }
+
+      });
+    })
+    .catch((e)=>{
+      console.log(e);
     });
 
-    console.log('sorted', sorted_contacts)
+    setTimeout(()=>{
 
-    contacts = sorted_contacts.map((contact)=> {
-      let i = contact.key;
-      if (this.state.show_all){
-       return (
-         <li key={contact.key} onClick={()=> this.toggle_all()}>
-           <button onClick={()=> this.remove_contact(i)}>X</button>
-           <button onClick={()=> this.edit_contact(i)}>edit</button>
-           {contact.name} {contact.city} {contact.state}</li>
-       );
-     } else {
-       return (
+      console.log('cons', contacts)
+      return contacts;
 
-         <li key={contact.key} onClick={()=> this.toggle_all()}>
-           {/* <button onClick={()=> this.remove_contact(i)}>X</button> */}
-           <a href={'/remove/' + contact.key}>X</a>
-
-           {/* <button onClick={()=> this.edit_contact(i)}>edit</button> */}
-           <a href={'/edit/' + contact.key}>edit</a>
-           {contact.prefix} {contact.name} {contact.email} {contact.phone} {contact.address} {contact.city} {contact.state} {contact.zip}</li>
-       );
-     }
-    });
-    console.log('map', contacts)
-    return contacts;
+    }, 3000)
 
   }
 
+    // contacts = sorted_contacts.map((contact)=> {
+    //   let i = contact.key;
+    //   if (this.state.show_all){
+    //    return (
+    //      <li key={contact.key} onClick={()=> this.toggle_all()}>
+    //        <button onClick={()=> this.remove_contact(i)}>X</button>
+    //        <button onClick={()=> this.edit_contact(i)}>edit</button>
+    //        {contact.name} {contact.city} {contact.state}</li>
+    //    );
+    //  } else {
+    //    return (
+    //
+    //      <li key={contact.key} onClick={()=> this.toggle_all()}>
+    //        {/* <button onClick={()=> this.remove_contact(i)}>X</button> */}
+    //        <a href={'/remove/' + contact.key}>X</a>
+    //
+    //        {/* <button onClick={()=> this.edit_contact(i)}>edit</button> */}
+    //        <a href={'/edit/' + contact.key}>edit</a>
+    //        {contact.prefix} {contact.name} {contact.email} {contact.phone} {contact.address} {contact.city} {contact.state} {contact.zip}</li>
+    //    );
+    //  }
+    // });
+    // console.log('map', contacts)
+    // return contacts;
 
   render(){
 

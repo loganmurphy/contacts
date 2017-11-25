@@ -6,8 +6,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import database, {User} from './fsociety';
 
 import './MyForm.css';
+
 
 class AddEditContact extends Component {
   constructor(props) {
@@ -42,6 +44,7 @@ class AddEditContact extends Component {
     }
   }
 
+
   update_state(event, key) {
     if (key === 'prefix'){
       this.setState({
@@ -75,6 +78,8 @@ class AddEditContact extends Component {
       zip: this.state.zip,
     }
 
+    database.ref('contacts/' + User.user.uid).set(this.state.contacts);
+
 // check here
     if (this.state.key) {
       contact.key = this.state.key;
@@ -93,7 +98,7 @@ class AddEditContact extends Component {
       newArray.push(contact);
     }
     localStorage.contacts = JSON.stringify(this.state.contacts);
-    this.props.history.push("/");
+    this.props.history.push("/contacts");
   }
 
   edit_contact(key){
@@ -118,7 +123,6 @@ class AddEditContact extends Component {
   }
 
   render() {
-
     return (
       <div>
         <Card className="md-card">

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
+import Login from './login'
 import Home from './home'
 import AddEditContact from './contacts'
 import RemoveContact from './remove'
@@ -12,9 +13,12 @@ import AppBar from 'material-ui/AppBar';
 import {BrowserRouter, Route, Link, Switch, Redirect}
   from 'react-router-dom';
 
+import { auth } from './fsociety';
+
 const theme = getMuiTheme({
   palette: {primary1Color: red700}
 });
+
 
 
 class App extends Component {
@@ -25,12 +29,13 @@ class App extends Component {
           <div>
             <AppBar title='Welcome'/>
             <ul>
-              <li><Link to='/'>Home</Link></li>
+              <li><Link to='/contacts'>Contacts</Link></li>
               {/* <li><Link to='/contacts'>Contacts</Link></li> */}
               <li><Link to='/add'>Add Contacts</Link></li>
             </ul>
             <Switch>
-              <Route exact path='/' component={Home}/>
+              <Route exact path='/' component={Login}/>
+              <Route exact path='/contacts' component={Home}/>
               <Route path='/add' component={AddEditContact}/>
               <Route path='/edit/:id' component={AddEditContact}/>
               <Route path='/remove/:id' component={RemoveContact}/>

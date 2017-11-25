@@ -21,7 +21,7 @@ class RemoveContact extends Component{
     contacts.splice(index_contact, 1);
     // localStorage.removeItem(contacts[index_contact]);
     localStorage.contacts = JSON.stringify(contacts);
-    this.props.history.push("/");
+    this.props.history.push("/contacts");
   }
 
   render(){
