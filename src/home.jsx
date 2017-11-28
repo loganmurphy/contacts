@@ -86,7 +86,7 @@ class Home extends Core {
 
           {/* <button onClick={()=> this.edit_contact(i)}>edit</button> */}
           <button><Link to={'/edit/' + contact.key}>edit</Link></button>
-          {contact.prefix}{contact.name} email: {contact.email} phone: {contact.phone} adress: {contact.address}, {contact.city}, {contact.state}, {contact.zip}</li>
+          {contact.prefix}{contact.name} email: {contact.email} phone: {contact.phone} address: {contact.address}, {contact.city}, {contact.state}, {contact.zip}</li>
       );
     }
   });
