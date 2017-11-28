@@ -13,6 +13,7 @@
     "uid": "0.0.2"
   },
   "scripts": {
+    "start": "REACT_APP_KEY=AIzaSyCGR1_AwW-JPMWf6a0YJrMnBRXY7cr-hcw react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
