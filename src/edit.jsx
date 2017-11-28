@@ -55,6 +55,8 @@ class RemoveContact extends Component{
       <div>
         <h1>Are you sure?</h1>
         <button onClick={()=> this.remove_contact()}>YES!</button>
+        <button >Never Mind!</button>
+
       </div>
     );
   }

@@ -1,7 +1,6 @@
 import * as firebase from "firebase";
 
 var config = {
-  apiKey: KEY,
   authDomain: "contacts2-26302.firebaseapp.com",
   databaseURL: "https://contacts2-26302.firebaseio.com",
   projectId: "contacts2-26302",

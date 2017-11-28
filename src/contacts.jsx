@@ -7,19 +7,21 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import database, {User} from './fsociety';
+import Core from './core/index';
 
-import './MyForm.css';
+import './css/MyForm.css';
 
 
-class AddEditContact extends Component {
+class AddEditContact extends Core {
   constructor(props) {
     super(props);
+    this.get_contacts();
 
     var key = props.match.params.id || null;
-    var contacts = JSON.parse(localStorage.contacts) || [];
+    var contacts = [];
     var contact = {};
 
-    console.log(key, contacts);
+    console.log(key);
 
     if (key) {
       var i = contacts.findIndex((c) => {
@@ -30,17 +32,29 @@ class AddEditContact extends Component {
       contact = contacts[i];
     }
 
+    // this.state = {
+    //   key: key,
+    //   prefix: contact.prefix || '',
+    //   name: contact.name || '',
+    //   email: contact.email || '',
+    //   phone: contact.phone || '',
+    //   address: contact.address || '',
+    //   city: contact.city || '',
+    //   state: contact.state || '',
+    //   zip: contact.zip || '',
+    //   contacts: contacts
+    // }
     this.state = {
-      key: key,
-      prefix: contact.prefix || '',
-      name: contact.name || '',
-      email: contact.email || '',
-      phone: contact.phone || '',
-      address: contact.address || '',
-      city: contact.city || '',
-      state: contact.state || '',
-      zip: contact.zip || '',
-      contacts: contacts
+      key: '',
+      prefix: '',
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      contacts: '',
     }
   }
 
@@ -60,6 +74,8 @@ class AddEditContact extends Component {
   }
 
   handle_submit(event) {
+    console.log('this=>', this.state)
+
     var newArray;
 
     console.log(`submitted: prefix:${this.state.prefix} name:${this.state.name}
@@ -76,11 +92,10 @@ class AddEditContact extends Component {
       city: this.state.city,
       state: this.state.state,
       zip: this.state.zip,
+      show_all: false,
+
     }
 
-    database.ref('contacts/' + User.user.uid).set(this.state.contacts);
-
-// check here
     if (this.state.key) {
       contact.key = this.state.key;
 
@@ -97,17 +112,20 @@ class AddEditContact extends Component {
       newArray = this.state.contacts;
       newArray.push(contact);
     }
-    localStorage.contacts = JSON.stringify(this.state.contacts);
+    database.ref('contacts/' + User.user.uid).set(this.state.contacts);
     this.props.history.push("/contacts");
   }
 
   edit_contact(key){
+
+    console.log('contact key here', key)
     var contacts = this.state.contacts;
     var i = contacts.findIndex((c) => {
       return c.key === key;
-
     });
+
     var contact = contacts[i];
+
     console.log(i, contact);
     this.setState({
       key: contact.key,
@@ -119,7 +137,10 @@ class AddEditContact extends Component {
       city: contact.city,
       state: contact.state,
       zip: contact.zip,
+      show_all: false,
     })
+    database.ref('contacts/' + User.user.uid).set(this.state.contacts);
+
   }
 
   render() {
@@ -127,7 +148,7 @@ class AddEditContact extends Component {
       <div>
         <Card className="md-card">
           <form onSubmit={event => this.handle_submit(event)}>
-            <CardTitle title='Contacts'/>
+            <CardTitle class='form-title' title='Add Contact'/>
             <CardText>
             <SelectField className='select' floatingLabelText='prefix' value={this.state.prefix}
               onChange={event => this.update_state(event, 'prefix')}>
