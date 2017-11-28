@@ -47,6 +47,8 @@ li button {
   height: 2rem;
   width: 3rem;
   border-radius: 5px;
+  background-color: #d33a30;
+  color: white;
 }
 
 li button a {
