@@ -32,30 +32,30 @@ class AddEditContact extends Core {
       contact = contacts[i];
     }
 
-    // this.state = {
-    //   key: key,
-    //   prefix: contact.prefix || '',
-    //   name: contact.name || '',
-    //   email: contact.email || '',
-    //   phone: contact.phone || '',
-    //   address: contact.address || '',
-    //   city: contact.city || '',
-    //   state: contact.state || '',
-    //   zip: contact.zip || '',
-    //   contacts: contacts
-    // }
     this.state = {
-      key: '',
-      prefix: '',
-      name: '',
-      email: '',
-      phone: '',
-      address: '',
-      city: '',
-      state: '',
-      zip: '',
-      contacts: '',
+      key: key,
+      prefix: contact.prefix || '',
+      name: contact.name || '',
+      email: contact.email || '',
+      phone: contact.phone || '',
+      address: contact.address || '',
+      city: contact.city || '',
+      state: contact.state || '',
+      zip: contact.zip || '',
+      contacts: contacts
     }
+    // this.state = {
+    //   key: '',
+    //   prefix: '',
+    //   name: '',
+    //   email: '',
+    //   phone: '',
+    //   address: '',
+    //   city: '',
+    //   state: '',
+    //   zip: '',
+    //   contacts: '',
+    // }
   }
 
 
@@ -93,7 +93,6 @@ class AddEditContact extends Core {
       state: this.state.state,
       zip: this.state.zip,
       show_all: false,
-
     }
 
     if (this.state.key) {
