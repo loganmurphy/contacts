@@ -15,34 +15,10 @@ import './css/MyForm.css';
 class AddEditContact extends Core {
   constructor(props) {
     super(props);
-    this.get_contacts();
+    this.get_contacts((contacts) => {
+      this.load_contact(contacts);
+    });
 
-    var key = props.match.params.id || null;
-    var contacts = [];
-    var contact = {};
-
-    console.log('key', key);
-
-    if (key) {
-      var i = contacts.findIndex((c) => {
-        return c.key === key;
-      });
-
-      contact = contacts[i];
-    }
-
-    // this.state = {
-    //   key: key,
-    //   prefix: contact.prefix || '',
-    //   name: contact.name || '',
-    //   email: contact.email || '',
-    //   phone: contact.phone || '',
-    //   address: contact.address || '',
-    //   city: contact.city || '',
-    //   state: contact.state || '',
-    //   zip: contact.zip || '',
-    //   contacts: contacts
-    // }
     this.state = {
       key: '',
       prefix: '',
@@ -57,6 +33,33 @@ class AddEditContact extends Core {
     }
   }
 
+  load_contact(contacts) {
+    var key = this.props.match.params.id || null;
+    var contact = {};
+
+    console.log('key', key);
+
+    if (key) {
+      var i = contacts.findIndex((c) => {
+        return c.key === key;
+      });
+
+      contact = contacts[i];
+    }
+
+    this.setState({
+      key: key,
+      prefix: contact.prefix || '',
+      name: contact.name || '',
+      email: contact.email || '',
+      phone: contact.phone || '',
+      address: contact.address || '',
+      city: contact.city || '',
+      state: contact.state || '',
+      zip: contact.zip || '',
+      contacts: contacts
+    });
+  }
 
   update_state(event, key) {
     if (key === 'prefix'){
@@ -114,32 +117,35 @@ class AddEditContact extends Core {
     this.props.history.push("/contacts");
   }
 
-  edit_contact(key){
+  // edit_contact(key){
+  //
+  //   var contacts = this.state.contacts;
+  //   var i = contacts.findIndex((c) => {
+  //     return c.key === key;
+  //   });
+  //   console.log('contact key here', key)
+  //
+  //   var contact = contacts[i];
+  //
+  //   console.log('con', i, contact);
+  //
+  //   this.setState({
+  //     key: contact.key,
+  //     prefix: contact.prefix,
+  //     name: contact.name,
+  //     email: contact.email,
+  //     phone: contact.phone,
+  //     address: contact.address,
+  //     city: contact.city,
+  //     state: contact.state,
+  //     zip: contact.zip,
+  //     show_all: false,
+  //   })
+  //   // this.setState({contacts: newArray});
+  //   database.ref('contacts/' + User.user.uid).set(this.state.contacts);
+  //
+  // }
 
-    var contacts = this.state.contacts;
-    var i = contacts.findIndex((c) => {
-      return c.key === key;
-    });
-    console.log('contact key here', key)
-
-    var contact = contacts[i];
-
-    console.log('con', i, contact);
-    this.setState({
-      key: contact.key,
-      prefix: contact.prefix,
-      name: contact.name,
-      email: contact.email,
-      phone: contact.phone,
-      address: contact.address,
-      city: contact.city,
-      state: contact.state,
-      zip: contact.zip,
-      show_all: false,
-    })
-    database.ref('contacts/' + User.user.uid).set(this.state.contacts);
-
-  }
 
   render() {
     return (
