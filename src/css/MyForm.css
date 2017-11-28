@@ -22,8 +22,11 @@ h2, li {
   font-size: 1.5rem!important;
   padding-bottom: 2px!important;
 }
-.form-title {
-  text-align: center;
+
+form div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 ol {
@@ -50,4 +53,27 @@ li button a {
   color: black;
   font-size: 1rem;
   text-decoration: none;
+}
+
+.remove_buttons_keep {
+  width: 8rem;
+  height: 4rem;
+  border-radius: 5px;
+  display: block;
+  margin: 1rem auto;
+  background-color: teal;
+
+}
+
+.remove_button_delete {
+  width: 8rem;
+  height: 4rem;
+  border-radius: 5px;
+  display: block;
+  margin: 1rem auto;
+  background-color: #d33a30;
+}
+
+.remove_buttons_div {
+  margin-top: 8rem;
 }

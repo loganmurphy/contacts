@@ -21,41 +21,40 @@ class AddEditContact extends Core {
     var contacts = [];
     var contact = {};
 
-    console.log(key);
+    console.log('key', key);
 
     if (key) {
       var i = contacts.findIndex((c) => {
         return c.key === key;
-
       });
 
       contact = contacts[i];
     }
 
-    this.state = {
-      key: key,
-      prefix: contact.prefix || '',
-      name: contact.name || '',
-      email: contact.email || '',
-      phone: contact.phone || '',
-      address: contact.address || '',
-      city: contact.city || '',
-      state: contact.state || '',
-      zip: contact.zip || '',
-      contacts: contacts
-    }
     // this.state = {
-    //   key: '',
-    //   prefix: '',
-    //   name: '',
-    //   email: '',
-    //   phone: '',
-    //   address: '',
-    //   city: '',
-    //   state: '',
-    //   zip: '',
-    //   contacts: '',
+    //   key: key,
+    //   prefix: contact.prefix || '',
+    //   name: contact.name || '',
+    //   email: contact.email || '',
+    //   phone: contact.phone || '',
+    //   address: contact.address || '',
+    //   city: contact.city || '',
+    //   state: contact.state || '',
+    //   zip: contact.zip || '',
+    //   contacts: contacts
     // }
+    this.state = {
+      key: '',
+      prefix: '',
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      contacts: '',
+    }
   }
 
 
@@ -117,15 +116,15 @@ class AddEditContact extends Core {
 
   edit_contact(key){
 
-    console.log('contact key here', key)
     var contacts = this.state.contacts;
     var i = contacts.findIndex((c) => {
       return c.key === key;
     });
+    console.log('contact key here', key)
 
     var contact = contacts[i];
 
-    console.log(i, contact);
+    console.log('con', i, contact);
     this.setState({
       key: contact.key,
       prefix: contact.prefix,
@@ -147,7 +146,7 @@ class AddEditContact extends Core {
       <div>
         <Card className="md-card">
           <form onSubmit={event => this.handle_submit(event)}>
-            <CardTitle class='form-title' title='Add Contact'/>
+            <CardTitle title='Add Contact'/>
             <CardText>
             <SelectField className='select' floatingLabelText='prefix' value={this.state.prefix}
               onChange={event => this.update_state(event, 'prefix')}>

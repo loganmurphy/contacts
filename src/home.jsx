@@ -75,7 +75,7 @@ class Home extends Core {
     if(contact.show_all === false){
       return (
         <li key={key} details={contact[key]} onClick={()=> this.toggle_all(contact.key)}>
-          {contact.name} {contact.city} {contact.state}</li>
+          {contact.name} address: {contact.city}, {contact.state}</li>
       );
     } else {
       return (
@@ -86,7 +86,7 @@ class Home extends Core {
 
           {/* <button onClick={()=> this.edit_contact(i)}>edit</button> */}
           <button><Link to={'/edit/' + contact.key}>edit</Link></button>
-          {contact.prefix} {contact.name} {contact.email} {contact.phone} {contact.address} {contact.city} {contact.state} {contact.zip}</li>
+          {contact.prefix}{contact.name} email: {contact.email} phone: {contact.phone} adress: {contact.address}, {contact.city}, {contact.state}, {contact.zip}</li>
       );
     }
   });

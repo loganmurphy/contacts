@@ -44,10 +44,10 @@ class RemoveContact extends Core{
     console.log(i);
 
     return(
-      <div>
+      <div className='remove_buttons_div' >
         <h1>Are you sure?</h1>
-        <button onClick={()=> this.remove_contact()}>YES!</button>
-        <button onClick={()=> this.props.history.push("/contacts")}>Never Mind!</button>
+        <button className='remove_buttons_keep' onClick={()=> this.remove_contact()}>YES!</button>
+        <button className='remove_button_delete' onClick={()=> this.props.history.push("/contacts")}>Never Mind!</button>
       </div>
     );
   }
